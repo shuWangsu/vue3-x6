@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "start": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -11,9 +11,16 @@
     "@ant-design/icons-vue": "^6.1.0",
     "@antv/g6": "^4.7.0",
     "@antv/layout": "^0.3.0",
-    "@antv/x6": "^1.33.1",
+    "@antv/x6": "^1.34.6",
     "@antv/x6-vue-shape": "^1.4.2",
+    "@logicflow/core": "^1.1.31",
+    "@logicflow/extension": "^1.1.31",
     "ant-design-vue": "^3.3.0-beta.3",
+    "axios": "^1.3.4",
+    "bpmn-js": "^8.10.0",
+    "bpmn-js-properties-panel": "^0.46.0",
+    "bpmn-js-token-simulation": "^0.10.0",
+    "camunda-bpmn-moddle": "^6.1.2",
     "core-js": "^3.8.3",
     "less-loader": "^6.2.0",
     "loadsh": "0.0.4",
@@ -27,7 +34,8 @@
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
     "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-service": "~5.0.0"
+    "@vue/cli-service": "~5.0.0",
+    "copy-webpack-plugin": "^11.0.0"
   },
   "browserslist": [
     "> 1%",
