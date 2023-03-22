@@ -79,7 +79,6 @@ const handleUpload = () => {
   });
   formData.append("paramId", 1);
   // uploading.value = true;
-  // uploading.value = true;
 
   axios({
     url: BASEURL + "/upload/image",
