@@ -32,7 +32,10 @@ const routes = [
     ],
   },
   { path: "/canvas", component: Canvas },
-  { path: "/upload-img", component: UploadImg },
+  {
+    path: "/upload-img",
+    component: UploadImg,
+  },
 ];
 
 // 3. 创建路由实例并传递 `routes` 配置。
