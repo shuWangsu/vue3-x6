@@ -15,3 +15,5 @@ export const columns = [
     width: "40%",
   },
 ];
+
+export const BASEURL = "http://10.11.12.10:7001";

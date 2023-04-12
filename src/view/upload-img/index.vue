@@ -1,26 +1,26 @@
 <template>
   <div class="upload">
-    <a-upload
-      :file-list="fileList"
-      :before-upload="beforeUpload"
-      accept=".png,.jpg,.jpeg,.gif,.webp"
-      multiple
-      @remove="handleRemove"
-    >
-      <a-button>
-        <upload-outlined></upload-outlined>
-        Select File
+    <a-space>
+      <a-upload
+        :file-list="fileList"
+        :before-upload="beforeUpload"
+        accept=".png,.jpg,.jpeg,.gif,.webp"
+        multiple
+        @remove="handleRemove"
+      >
+        <a-button>
+          <upload-outlined></upload-outlined>
+          Select File
+        </a-button>
+      </a-upload>
+
+      <a-button type="primary" :loading="uploading" @click="handleUpload">
+        {{ uploading ? "Uploading" : "Start Upload" }}
       </a-button>
-    </a-upload>
-    <a-button
-      type="primary"
-      :loading="uploading"
-      style="margin-top: 16px"
-      @click="handleUpload"
-    >
-      {{ uploading ? "Uploading" : "Start Upload" }}
-    </a-button>
-    <a-button @click="changeInfo">修改</a-button>
+      <a-button @click="changeInfo">修改</a-button>
+      <a-button type="primary" @click="uploadImg">上传图片</a-button>
+      <a-button @click="createGroup">新建分组</a-button>
+    </a-space>
     <div>
       <img
         v-for="item in imgList"
@@ -39,6 +39,8 @@
     @change="handleChange"
   >
   </a-table>
+  <GroupModal ref="groupRef" />
+  <UploadImgModal ref="uploadImgRef" />
 </template>
 <script setup>
 import { ref, onMounted, computed } from "vue";
@@ -46,15 +48,15 @@ import { UploadOutlined } from "@ant-design/icons-vue";
 import { message } from "ant-design-vue";
 import axios from "axios";
 
-import { columns } from "./config";
-
-const BASEURL = "http://10.11.12.10:7001";
+import { columns, BASEURL } from "./config";
+import GroupModal from "./group";
+import UploadImgModal from "./upload";
 
 const fileList = ref([]);
 const imgList = ref([]);
 const dataSource = ref([]);
 const uploading = ref(false);
-const total = ref(100);
+const total = ref(0);
 const current = ref(1);
 const pageSize = ref(10);
 const pagination = computed(() => ({
@@ -62,6 +64,17 @@ const pagination = computed(() => ({
   current: current.value,
   pageSize: pageSize.value,
 }));
+const groupRef = ref(null);
+const uploadImgRef = ref(null);
+
+const createGroup = () => {
+  groupRef.value.open();
+};
+
+const uploadImg = () => {
+  uploadImgRef.value.open();
+};
+
 const handleRemove = (file) => {
   const index = fileList.value.indexOf(file);
   const newFileList = fileList.value.slice();
@@ -126,9 +139,10 @@ const getTableList = ({ current = 1, pageSize = 10 }) => {
       current,
       pageSize,
     },
-  }).then((res) => {
-    dataSource.value = res.data.data;
-    total.value = res.data.total;
+  }).then(({ data }) => {
+    console.log(data, "---");
+    dataSource.value = data.data.result;
+    total.value = data.data.page.total;
   });
 };
 
